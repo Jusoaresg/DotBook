@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace BulkyWeb.Models
+namespace Bulky.Models
 {
     public class Category
     {
