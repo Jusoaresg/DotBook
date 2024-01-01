@@ -1,6 +1,7 @@
 ﻿using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -30,9 +31,13 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 Value = u.Id.ToString(),
             });
 
-            ViewBag.CategoryList = CategoryList;
+            ProductVM productVM = new()
+            {
+                CategoryList = CategoryList,
+                Product = new Product()
+            };
 
-            return View();
+            return View(productVM);
         }
 
         [HttpPost]
