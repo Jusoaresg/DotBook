@@ -10,13 +10,13 @@ namespace Bulky.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Title { get; set; }
+        public required string Title { get; set; }
         [Required]
-        public string Description { get; set; }
+        public required string Description { get; set; }
         [Required]
-        public string ISBN { get; set; }
+        public required string ISBN { get; set; }
         [Required]
-        public string Author { get; set; }
+        public required string Author { get; set; }
 
         [Required]
         [Display(Name = "List Price")]
@@ -40,8 +40,8 @@ namespace Bulky.Models
 
         public int CategoryId { get; set; }
         [ForeignKey("ProductId")]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }
