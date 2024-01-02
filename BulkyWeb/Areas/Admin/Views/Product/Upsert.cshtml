@@ -12,6 +12,8 @@
 
         <form method="post" class="row" enctype="multipart/form-data">
         <input asp-for="Product.Id" hidden/>
+
+        <div class="col-10">
             <div class="border p-3 rounded-4">
                 <div asp-validation-summary="All"></div>
                 <div class="form-floating py-2 col-12">
@@ -97,6 +99,12 @@
                 </div>
 
             </div>
+
+        </div>
+
+        <div class="col-2">
+            <img src="@Model.Product.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9">
+        </div>
 
         </form>
 
