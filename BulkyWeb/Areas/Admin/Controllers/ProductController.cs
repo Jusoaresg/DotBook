@@ -5,6 +5,7 @@ using Bulky.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -126,14 +127,17 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     return Json(new {success = false, message = "Error while deleting"});
                 }
 
-                 //Delete old image
-                var oldImagePath = 
-                Path.Combine(_webHostEnviroment.WebRootPath, 
-                productToBeDeleted.ImageUrl.TrimStart('\\'));
-
-                if(System.IO.File.Exists(oldImagePath))
+                if(!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
                 {
-                    System.IO.File.Delete(oldImagePath);
+                    //Delete old image
+                    var oldImagePath = 
+                    Path.Combine(_webHostEnviroment.WebRootPath, 
+                    productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+                    if(System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
                 }
 
                 _unitOfWork.Product.Remove(productToBeDeleted);
