@@ -10,7 +10,7 @@ namespace Bulky.Models{
         [Required]
         public string UserId {get; set;}
         [Required]
-        public string ProductId {get; set;}
+        public int ProductId {get; set;}
         [ForeignKey("ProductId")]
         public Product Product {get; set;}
         [Range(1, 1000)]
