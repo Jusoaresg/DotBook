@@ -46,6 +46,11 @@
                         }
 
                     </ul>
+
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <i class="bi bi-cart px-3"></i>
+                    }
                     <partial name="_LoginPartial"/>
                 </div>
             </div>
