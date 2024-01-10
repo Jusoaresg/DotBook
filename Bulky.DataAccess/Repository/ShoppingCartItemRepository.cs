@@ -16,6 +16,13 @@ public class ShoppingCartItemRepository : Repository<ShoppingCartItem>, IShoppin
         _db = db;
     }
 
+    public IEnumerable<ShoppingCartItem> GetAllUserCart(string userId)
+    {
+        IQueryable<ShoppingCartItem> query = dbSet;
+        var items = query.Where(u=>u.UserId==userId);
+        return items;
+    }
+
     public void Update(ShoppingCartItem obj)
     {
         //var itemFromDb = _db.ShoppingCartItems.FirstOrDefault(u=>u.Id==obj.Id);
