@@ -1,26 +1,36 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BulkyWeb.Areas.Customer.Controllers
 {
+    [Authorize]
     [Area("Customer")]
     public class ShoppingCart : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ShoppingCart(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        public ShoppingCart(
+            ILogger<HomeController> logger,
+            IUnitOfWork unitOfWork,
+            UserManager<ApplicationUser> userManager )
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
-            return View(productList);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            IEnumerable<ShoppingCartItem> shoppingCartItemList = _unitOfWork.ShoppingCartItem.GetAllUserCart(userId);
+            return View(shoppingCartItemList);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
