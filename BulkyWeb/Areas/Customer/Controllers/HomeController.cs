@@ -29,6 +29,12 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return View(product);
         }
 
+        /*[HttpPost]
+        public IActionResult Details()
+        {
+
+        }*/
+
         public IActionResult Privacy()
         {
             return View();
