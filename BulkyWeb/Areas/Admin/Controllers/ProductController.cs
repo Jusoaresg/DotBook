@@ -82,7 +82,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                    productVM.Product.ImageUrl = @"/images/product/" + fileName;
                 }
 
 
@@ -137,11 +137,10 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 Path.Combine(_webHostEnviroment.WebRootPath,
                 productToBeDeleted.ImageUrl.TrimStart('/'));
 
-                //"../../../wwwroot/"
                 Console.WriteLine(oldImagePath);
-                if (System.IO.File.Exists("../../../wwwroot/" + oldImagePath))
+                if (System.IO.File.Exists(oldImagePath))
                 {
-                    System.IO.File.Delete("../../../wwwroot/" + oldImagePath);
+                    System.IO.File.Delete(oldImagePath);
                 }
             }
 
