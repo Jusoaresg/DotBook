@@ -1,5 +1,6 @@
 STARTUP_PROJECT = BulkyWeb
 DATA_PROJECT = Bulky.DataAccess
+SOLUTION = Bulky.sln
 
 DB_CONTAINER_NAME = bulkyBase
 
@@ -10,7 +11,7 @@ watch:
 	dotnet watch --project $(STARTUP_PROJECT) 
 
 build:
-	dotnet build Bulky.sln 
+	dotnet build $(SOLUTION)
 
 NAME=""
 add-migration: build
@@ -18,6 +19,9 @@ add-migration: build
 
 remove-migration: 
 	dotnet ef migrations remove --project $(DATA_PROJECT) --startup-project $(STARTUP_PROJECT)
+
+restore:
+	dotnet restore
 
 # DOCKER
 
