@@ -23,8 +23,13 @@ remove-migration:
 restore:
 	dotnet restore
 
+update-database:
+	dotnet ef database update --project $(DATA_PROJECT) --startup-project $(STARTUP_PROJECT)
 # DOCKER
 
-run-docker:
+create-container:
+	sudo docker run -e "ACCEPT_EULA=Y" -e 'MSSQL_SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 --name $(DB_CONTAINER_NAME) -d mcr.microsoft.com/mssql/server:2022-latest
+
+run-container:
 	sudo docker start $(DB_CONTAINER_NAME)
 
