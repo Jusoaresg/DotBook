@@ -20,9 +20,25 @@ Para configurar o ambiente de desenvolvimento:
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/bulkybook.git
-cd bulkybook
+git clone https://github.com/jusoaresg/BulkyBook
+cd BulkyBook
 ```
+Configure o ambiente com o docker pelo make file:
+
+```bash
+make create-container
+make update-database
+```
+
+Rode a aplicação
+
+```bash
+make run
+```
+
+OBS: Caso não queira utilizar o docker para o banco: </br>
+ - Crie um banco de dados no SQL Server Express ou outro que preferir </br>
+ - Mude a connection string do appsettings.json na pasta BulkyWeb </br>
 
 ## Estrutura do Projeto
 O projeto está organizado em diferentes diretórios para manter uma estrutura clara e modular:
