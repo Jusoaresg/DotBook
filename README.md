@@ -14,7 +14,7 @@ Identity Roles: Separando as áreas de Customer e Admin para garantir funcionali
 
 Makefile: Automatizando tarefas comuns do projeto para simplificar o fluxo de trabalho.
 
-## Configuração do Ambiente
+## Configuração do Ambiente no Linux
 Para configurar o ambiente de desenvolvimento:
 
 Clone o repositório:
