@@ -19,8 +19,15 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
-            return View(productList);
+            try
+            {
+                IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+                return View(productList);
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
         }
 
         public IActionResult Details(int productId)
@@ -28,12 +35,6 @@ namespace BulkyWeb.Areas.Customer.Controllers
             Product product = _unitOfWork.Product.Get(u=>u.Id==productId, includeProperties: "Category");
             return View(product);
         }
-
-        /*[HttpPost]
-        public IActionResult Details()
-        {
-
-        }*/
 
         public IActionResult Privacy()
         {
