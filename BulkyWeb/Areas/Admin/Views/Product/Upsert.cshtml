@@ -4,7 +4,7 @@
     <div class="card-header bg-primary bg-gradient m-lg-0 py-2 rounded-2">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">@(Model.Product.Id!=0?"Update":"Create") Category</h2>
+                <h2 class="text-white py-2">@(Model.Product.Id!=0?"Update":"Create") Product</h2>
             </div>
         </div>
     </div>
@@ -120,7 +120,7 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons lists table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            plugins: 'anchor autolink charmap codesample emoticons lists table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | tinycomments | checklist numlist bullist indent outdent',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
