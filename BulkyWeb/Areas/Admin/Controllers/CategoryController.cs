@@ -23,52 +23,37 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(objCategoryList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            var category = new Category();
+            if(id != null && id != 0)
+            {
+                category = _unitOfWork.Category.Get(u => u.Id == id);
+                return View(category);
+            }
+            else
+            {
+                return View(category);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(Category obj)
+        public IActionResult Upsert(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
+            if(ModelState.IsValid)
             {
-                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name");
-            }
+                if(obj.Id == 0)
+                {
+                    _unitOfWork.Category.Add(obj);
+                    TempData["success"] = "Category create successfully";
+                } 
+                else
+                {
+                    _unitOfWork.Category.Update(obj);
+                    TempData["success"] = "Category edited successfully";
+                }
 
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Category.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Category created successfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
-
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-
-            if (categoryFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(categoryFromDb);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Category obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Category.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
