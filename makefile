@@ -1,6 +1,6 @@
-STARTUP_PROJECT = BulkyWeb
-DATA_PROJECT = Bulky.DataAccess
-SOLUTION = Bulky.sln
+STARTUP_PROJECT = BookWeb
+DATA_PROJECT = Book.DataAccess
+SOLUTION = DotBook.sln
 
 DB_CONTAINER_NAME = bulkyBase
 
