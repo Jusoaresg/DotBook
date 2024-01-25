@@ -1,7 +1,9 @@
 using Book.DataAccess.Repository.IRepository;
 using Book.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BookWeb.Areas.Customer.Controllers
 {
@@ -34,6 +36,22 @@ namespace BookWeb.Areas.Customer.Controllers
         {
             Product product = _unitOfWork.Product.Get(u=>u.Id==productId, includeProperties: "Category");
             return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Details(Product product, int amount)
+        {
+            Console.WriteLine("PRODUTO" + product);
+            Console.WriteLine("QUANTIDADE" + amount);
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(userId))
+            {
+                ShoppingCartItem item = new ShoppingCartItem{UserId = userId, ProductId = product.Id, Amount = amount};
+                _unitOfWork.ShoppingCartItem.Add(item);
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error");
         }
 
         public IActionResult Privacy()
