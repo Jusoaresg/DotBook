@@ -13,23 +13,20 @@ namespace BookWeb.Areas.Customer.Controllers
     public class ShoppingCart : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
 
         public ShoppingCart(
             ILogger<HomeController> logger,
-            IUnitOfWork unitOfWork,
-            UserManager<ApplicationUser> userManager )
+            IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            IEnumerable<ShoppingCartItem> shoppingCartItemList = _unitOfWork.ShoppingCartItem.GetAllUserCart(userId);
+            IEnumerable<ShoppingCartItem> shoppingCartItemList = _unitOfWork.ShoppingCartItem.GetAll(includeProperties: "Product").Where<ShoppingCartItem>(u=>u.UserId==userId);
             return View(shoppingCartItemList);
         }
 
