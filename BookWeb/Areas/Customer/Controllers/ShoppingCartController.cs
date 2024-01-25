@@ -30,6 +30,21 @@ namespace BookWeb.Areas.Customer.Controllers
             return View(shoppingCartItemList);
         }
 
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var cartItem = _unitOfWork.ShoppingCartItem.Get(u=>u.Id==id);
+
+            if(cartItem == null)
+            {
+                return Json(new {success = false});
+            }
+
+            _unitOfWork.ShoppingCartItem.Remove(cartItem);
+            _unitOfWork.Save();
+            return Json(new {success = true, message = "Delete Successfuly"});
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
