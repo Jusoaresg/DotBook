@@ -6,6 +6,5 @@ namespace Book.DataAccess;
 
 public interface IShoppingCartItem : IRepository<ShoppingCartItem>
 {
-    public IEnumerable<ShoppingCartItem> GetAllUserCart(string userId);
     public void Update(ShoppingCartItem obj);
 }
