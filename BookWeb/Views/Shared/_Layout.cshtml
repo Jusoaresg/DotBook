@@ -47,10 +47,9 @@
 
                     </ul>
 
-                    @if(User.Identity.IsAuthenticated)
-                    {
-                        <i class="bi bi-cart px-3"></i>
-                    }
+                        <a class="nav-link" asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index">
+                            <i class="bi bi-cart4"></i>
+                        </a>
                     <partial name="_LoginPartial"/>
                 </div>
             </div>
