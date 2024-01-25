@@ -1,0 +1,60 @@
+@model IEnumerable<ShoppingCartItem>
+
+<div class="card shadow border-2 rounded-3 mt-4">
+    <div class="card-header bg-primary bg-gradient m-lg-0 py-2 rounded-2">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-4">Shopping Cart</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    @foreach (var cartItem in Model.ToList())
+                    {
+                        <div class="card mb-3 rounded-3">
+                            <div class="row g-0">
+                                <!-- col-md-4 -->
+                                <div class="col-md-2">
+                                    <img src="@cartItem.Product.ImageUrl" alt="@cartItem.Product.Title" class="img-fluid rounded-start" />
+                                </div>
+                                <div class="col-md-10 position-relative">
+                                    <div class="card-body p-2 pb-0 pt-1">
+                                        <h5 class="card-title">@cartItem.Product.Title</h5>
+                                        <p class="card-text">Quantidade: @cartItem.Amount</p>
+                                        <div class="d-flex justify-content-between align-items-center mb-0">
+                                            <p class="card-text">Preço Unitário: @cartItem.Product.Price.ToString("C")</p>
+                                            <p class="card-text">Subtotal: @((cartItem.Amount * cartItem.Product.Price).ToString("C"))</p>
+                                        <button type="button" class="btn btn-danger position-absolute top-0 end-0 me-2 mt-2 btn-sm rounded-3"> Remover do Carrinho </button>
+                                        </div>
+
+                                    <div class="d-flex justify-content-end align-items-center pb-1">
+                                            <button class="btn btn-outline-info btn-sm rounded-3" data-bs-toggle="collapse" data-bs-target="#descriptionCollapse_@cartItem.Product.Id">Description</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="collapse" id="descriptionCollapse_@cartItem.Product.Id">
+                                    <div class="card card-footer">
+                                        @cartItem.Product.Description
+                                    </div>
+                                </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card rounded-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Resumo do Carrinho</h5>
+                            <p class="card-text">Total: @(Model.Sum(cartItem => cartItem.Amount * cartItem.Product.Price).ToString("C"))</p>
+                            <button type="button" class="btn btn-success">Finalizar Compra</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
