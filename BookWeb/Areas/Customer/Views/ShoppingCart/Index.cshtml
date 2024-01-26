@@ -22,16 +22,16 @@
                                 <div class="col-md-10 position-relative">
                                     <div class="card-body p-2 pb-0 pt-1">
                                         <h5 class="card-title">@cartItem.Product.Title</h5>
-                                        <p class="card-text"> Quantidade: @cartItem.Amount </p>
+                                        <p class="card-text"> Amount: @cartItem.Amount </p>
                                         <div class="d-flex justify-content-between align-items-center mb-0">
-                                            <p class="card-text">Preço Unitário: @cartItem.Product.Price.ToString("C")</p>
+                                            <p class="card-text">Unit Price: @cartItem.Product.Price.ToString("C")</p>
                                             <p class="card-text">Subtotal: @((cartItem.Amount * cartItem.Product.Price).ToString("C"))</p>
-                                            <button type="button" class="btn btn-danger position-absolute top-0 end-0 me-2 mt-2 btn-sm rounded-3" onclick='Delete("@cartItem.Id")'> Remover do Carrinho </button>
+                                            <button type="button" class="btn btn-danger position-absolute top-0 end-0 me-2 mt-2 btn-sm rounded-3" onclick='Delete("@cartItem.Id")'> Remove from Cart</button>
                                         </div>
 
                                         <div class="d-flex justify-content-end align-items-center pb-1">
-                                            <button hidden class=" btn btn-outline-primary rounded-3 pb-0 pt-0 pe-2 ps-2">+</button>
-                                            <button hidden class="btn btn-outline-primary rounded-3 mx-2 pb-0 pt-0 pe-2 ps-2">-</button>
+                                            <button class=" btn btn-outline-primary rounded-3 pb-0 pt-0 pe-2 ps-2" onclick='modifyAmount("@cartItem.Id", "@cartItem.Amount", "increase")'>+</button>
+                                            <button class="btn btn-outline-primary rounded-3 mx-2 pb-0 pt-0 pe-2 ps-2" onclick='modifyAmount("@cartItem.Id", "@cartItem.Amount", "decrease")'>-</button>
                                             <button class="btn btn-outline-info btn-sm rounded-3" data-bs-toggle="collapse" data-bs-target="#descriptionCollapse_@cartItem.Product.Id">Description</button>
                                         </div>
                                     </div>
@@ -49,9 +49,9 @@
                 <div class="col-md-4">
                     <div class="card rounded-3">
                         <div class="card-body">
-                            <h5 class="card-title">Resumo do Carrinho</h5>
+                            <h5 class="card-title">Cart Summary</h5>
                             <p class="card-text">Total: @(Model.Sum(cartItem => cartItem.Amount * cartItem.Product.Price).ToString("C"))</p>
-                            <button type="button" class="btn btn-success">Finalizar Compra</button>
+                            <button type="button" class="btn btn-success">Finish Purchase</button>
                         </div>
                     </div>
                 </div>
@@ -59,6 +59,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
 function Delete(cartItemId){
@@ -81,5 +82,27 @@ function Delete(cartItemId){
           });
         }
       });
+}
+
+function modifyAmount(cartItemId, cartItemAmount, operation){
+    var newAmount = cartItemAmount;
+    if(operation === 'increase'){
+        newAmount++;
+    }
+    else if (operation === 'decrease'){
+        newAmount--;
+    }
+    
+    if(newAmount >= 1)
+    {
+        var url = `@Url.Action("ModifyAmount", "ShoppingCart")?id=${cartItemId}&amount=${newAmount}`;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function (data){
+                window.location.reload();
+            }
+        })
+    }
 }
 </script>
