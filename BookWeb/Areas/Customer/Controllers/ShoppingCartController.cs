@@ -45,6 +45,24 @@ namespace BookWeb.Areas.Customer.Controllers
             return Json(new {success = true, message = "Delete Successfuly"});
         }
 
+        [HttpPost]
+        public IActionResult ModifyAmount(int? id, int amount)
+        {
+            Console.WriteLine("FOFIOOFO");
+            Console.WriteLine(amount);
+            Console.WriteLine(id);
+            var cartItem = _unitOfWork.ShoppingCartItem.Get(u => u.Id == id);
+            if(cartItem == null)
+            {
+                return Json(new {success = false, message = "Failed to get CartItem"});
+            }
+
+            cartItem.Amount = amount;
+            _unitOfWork.ShoppingCartItem.Update(cartItem);
+            _unitOfWork.Save();
+            return Json(new {success = true, message = "Cart amount modified"});
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
