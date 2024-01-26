@@ -1,0 +1,29 @@
+services:
+
+  dotbookBase:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 127.0.0.1:1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+      - MSSQL_PID=Express
+
+  dotbook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 127.0.0.1:5171:5171
+    environment:
+      - ASPNETCORE_HTTP_PORT=https://+:5171
+      - ASPNETCORE_URLS=http://+:5171
+      - DbServer=dotbookBase
+      - DbPort=1433
+      - DbUser=SA
+      - Password=yourStrong(!)Password
+      - Database=master
+    depends_on:
+      - dotbookBase
+    command: sh -c "sleep 10000"
+    
