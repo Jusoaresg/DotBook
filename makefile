@@ -33,3 +33,5 @@ create-container:
 run-container:
 	sudo docker start $(DB_CONTAINER_NAME)
 
+image-build:
+	sudo docker build --rm -t dotbook:latest .
