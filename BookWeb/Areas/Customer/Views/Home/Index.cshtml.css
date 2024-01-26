@@ -1,0 +1,38 @@
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Aumenta o tamanho do card em 5% */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil */
+    background-color: #f8f9fa; /* Altera a cor de fundo ao passar o mouse */
+}
+
+.card:hover img {
+    transform: scale(1.2); /* Aumenta o tamanho da imagem em 20% */
+    transition: transform 0.3s ease; /* Adiciona uma transição suave à transformação da imagem */
+}
+
+/* Estilos adicionais, ajuste conforme necessário */
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 10px;
+    transition: padding 0.4s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover .card-body{
+    padding-top: 35px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
