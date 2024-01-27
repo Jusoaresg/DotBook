@@ -35,3 +35,10 @@ run-container:
 
 image-build:
 	sudo docker build --rm -t dotbook:latest .
+
+remove-docker-containers:
+	sudo docker rm dotbookservices_dotbook_1
+	sudo docker rm dotbookservices_dotbookBase_1
+
+remove-docker-image:
+	sudo docker image rm dotbookservices_dotbook
