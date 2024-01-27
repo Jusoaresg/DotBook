@@ -8,6 +8,8 @@ O DotBook esta atualmente implantado e acessivel online. Você pode visitar a ap
 
 https://dotbook.onrender.com
 
+**OBS**: O site normalmente demora para carregar a primeira vez mesmo, por conta da inatividade de usuarios.
+
 
 ## Visão Geral
 
