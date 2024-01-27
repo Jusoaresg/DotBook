@@ -72,6 +72,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
-//DatabaseManagementService.MigrationInitialization(app);
+await DatabaseManagementService.MigrationInitialization(app);
 
 app.Run();
