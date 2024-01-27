@@ -44,12 +44,25 @@ namespace BookWeb.Areas.Customer.Controllers
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!string.IsNullOrEmpty(userId))
             {
+
+                IEnumerable<ShoppingCartItem> userItems = _unitOfWork.ShoppingCartItem.GetAll(includeProperties: "Product").Where(u => u.UserId == userId);
+                foreach(var obj in userItems)
+                {
+                    if(obj.ProductId == product.Id)
+                    {
+                        obj.Amount += amount;
+                        _unitOfWork.ShoppingCartItem.Update(obj);
+                        _unitOfWork.Save();
+                        return RedirectToAction("Index", "ShoppingCart");
+                    }
+                }
+
                 ShoppingCartItem item = new ShoppingCartItem{UserId = userId, ProductId = product.Id, Amount = amount};
                 _unitOfWork.ShoppingCartItem.Add(item);
                 _unitOfWork.Save();
                 return RedirectToAction("Index", "ShoppingCart");
             }
-            return RedirectToAction("Error");
+            return RedirectToAction("Login", "Account", new {area = "Identity"});
         }
 
         public IActionResult Privacy()
