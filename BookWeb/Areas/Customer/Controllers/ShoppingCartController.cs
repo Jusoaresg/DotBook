@@ -48,10 +48,7 @@ namespace BookWeb.Areas.Customer.Controllers
         [HttpPost]
         public IActionResult ModifyAmount(int? id, int amount)
         {
-            Console.WriteLine("FOFIOOFO");
-            Console.WriteLine(amount);
-            Console.WriteLine(id);
-            var cartItem = _unitOfWork.ShoppingCartItem.Get(u => u.Id == id);
+           var cartItem = _unitOfWork.ShoppingCartItem.Get(u => u.Id == id);
             if(cartItem == null)
             {
                 return Json(new {success = false, message = "Failed to get CartItem"});
