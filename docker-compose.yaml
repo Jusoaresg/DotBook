@@ -1,13 +1,23 @@
 services:
 
+# SQL Server Base
+#  dotbookBase:
+#    image: mcr.microsoft.com/mssql/server:2022-latest
+#    ports:
+#      - 127.0.0.1:1433:1433
+#    environment:
+#      - ACCEPT_EULA=Y
+#      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+#      - MSSQL_PID=Express
+
   dotbookBase:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: postgres
     ports:
-      - 127.0.0.1:1433:1433
+      - 127.0.0.1:5432:5432
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=yourStrong(!)Password
-      - MSSQL_PID=Express
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dotbookbase
 
   dotbook:
     build:
@@ -18,11 +28,11 @@ services:
     environment:
       - ASPNETCORE_HTTP_PORT=https://+:5171
       - ASPNETCORE_URLS=http://+:5171
-      - DbServer=dotbookBase
-      - DbPort=1433
-      - DbUser=SA
-      - Password=yourStrong(!)Password
-      - Database=master
+      - DbHost=dotbookBase
+      - DbPort=5432
+      - DbUser=postgres
+      - Password=postgres
+      - Database=dotbookbase
     depends_on:
       - dotbookBase
     command: sh -c "sleep 10000"
