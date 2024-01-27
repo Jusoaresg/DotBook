@@ -1,14 +1,21 @@
-# BulkyBook - Projeto de estudo
+# DotBook - Projeto de estudo
 
-O BulkyBook é uma loja online de livros desenvolvida em ASP.NET Core MVC.
+O DotBook é uma loja online de livros desenvolvida em ASP.NET Core MVC.
+
+## Deploy
+
+O DotBook esta atualmente implantado e acessivel online. Você pode visitar a aplicação no link:
+
+https://dotbook.onrender.com
+
 
 ## Visão Geral
 
-### O BulkyBook é uma aplicação simples, mas abrangente, que utiliza diversas tecnologias e boas práticas de desenvolvimento. Aqui estão alguns destaques do projeto:
+### O DotBook é uma aplicação simples, mas abrangente, que utiliza diversas tecnologias e boas práticas de desenvolvimento. Aqui estão alguns destaques do projeto:
 
 ASP.NET Core MVC: Utilizando o framework web da Microsoft para criar uma aplicação robusta e escalável.
 
-Entity Framework Core: Implementando um sistema de banco de dados SQL Server para gerenciar produtos e categorias de forma eficiente.
+Entity Framework Core: Implementando um sistema de banco de dados PostgreSQL para gerenciar produtos e categorias de forma eficiente.
 
 Identity Roles: Separando as áreas de Customer e Admin para garantir funcionalidades distintas para diferentes usuários.
 
@@ -20,34 +27,24 @@ Para configurar o ambiente de desenvolvimento:
 Clone o repositório:
 
 ```bash
-git clone https://github.com/jusoaresg/BulkyBook
-cd BulkyBook
+git clone https://github.com/jusoaresg/DotBook
+cd DotBook
 ```
-Configure o ambiente com o docker pelo make file:
+
+Inicie o Docker-Compose com o DotBook e o PostgreSQL
 
 ```bash
-make create-container
-make update-database
+sudo docker-compose up
 ```
 
-Rode a aplicação
-
-```bash
-make run
-```
-
-OBS: Caso não queira utilizar o docker para o banco: </br>
- - Crie um banco de dados no SQL Server Express ou outro que preferir </br>
- - Mude a connection string do appsettings.json na pasta BulkyWeb </br>
-
-## Estrutura do Projeto
+# Estrutura do Projeto
 O projeto está organizado em diferentes diretórios para manter uma estrutura clara e modular:
 
 Models: Modelos de classes. <br/>
 DataAccess: Configurações e inicialização do banco de dados. <br/>
 Areas: Contém áreas separadas para Customer e Admin. <br/>
 Controllers, Models, Views: Componentes principais da arquitetura MVC. <br/>
-Makefile: Arquivo para automação das tarefas do dotnet CLI. <br/>
+Makefile: Arquivo para automação das tarefas do docker e dotnet CLI. <br/>
 
 ## Funcionalidades
 Áreas Separadas: Diferentes funções para usuários, com o Admin tendo acesso a páginas de criação de categorias e produtos.
@@ -55,3 +52,5 @@ Makefile: Arquivo para automação das tarefas do dotnet CLI. <br/>
 CRUD de Produtos: Possibilidade de criar, ler, atualizar e excluir produtos.
 
 CRUD de Categorias: O Admin pode gerenciar categorias, adicionando novas ou removendo existentes.
+
+Carrinho de compras: Funcionalidades de deletar, incrementar e decrementar quantidade.
