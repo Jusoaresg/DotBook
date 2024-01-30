@@ -1,5 +1,10 @@
 @model IEnumerable<ShoppingCartItem>
 
+@{
+    double price = 0;
+    double totalPrice = 0;
+}
+
 <div class="card shadow border-2 rounded-3 mt-4">
     <div class="card-header bg-primary bg-gradient m-lg-0 py-2 rounded-2">
         <div class="row">
@@ -24,10 +29,29 @@
                                         <h5 class="card-title">@cartItem.Product.Title</h5>
                                         <p class="card-text"> Amount: @cartItem.Amount </p>
                                         <div class="d-flex justify-content-between align-items-center mb-0">
-                                            <p class="card-text">Unit Price: @cartItem.Product.Price.ToString("C")</p>
-                                            <p class="card-text">Subtotal: @((cartItem.Amount * cartItem.Product.Price).ToString("C"))</p>
-                                            <button type="button" class="btn btn-danger position-absolute top-0 end-0 me-2 mt-2 btn-sm rounded-3" onclick='Delete("@cartItem.Id")'> Remove from Cart</button>
-                                        </div>
+                                            
+                                            <div hidden>
+                                                 @if(@cartItem.Amount >= 100)
+                                                 {
+                                                     @(price = @cartItem.Product.Price100);
+                                                 }
+                                                 else if (@cartItem.Amount > 50)
+                                                 {
+                                                     @(price = @cartItem.Product.Price50);
+                                                 }
+                                                 else 
+                                                 {
+                                                    @(price = @cartItem.Product.Price); 
+                                                 }
+
+                                                 @(totalPrice += (price * @cartItem.Amount));
+                                            </div>
+
+                                                <p class="card-text">Unit Price: @(price.ToString("C"))</p>
+                                                <p class="card-text">Subtotal: @((cartItem.Amount * price).ToString("C"))</p>
+                                                <button type="button" class="btn btn-danger position-absolute top-0 end-0 me-2 mt-2 btn-sm rounded-3" onclick='Delete("@cartItem.Id")'> Remove from Cart</button>
+                 
+                                             </div>
 
                                         <div class="d-flex justify-content-end align-items-center pb-1">
                                             <button class=" btn btn-outline-primary rounded-3 pb-0 pt-0 pe-2 ps-2" onclick='modifyAmount("@cartItem.Id", "@cartItem.Amount", "increase")'>+</button>
@@ -50,7 +74,7 @@
                     <div class="card rounded-3">
                         <div class="card-body">
                             <h5 class="card-title">Cart Summary</h5>
-                            <p class="card-text">Total: @(Model.Sum(cartItem => cartItem.Amount * cartItem.Product.Price).ToString("C"))</p>
+                            <p class="card-text">Total: @(totalPrice.ToString("C"))</p>
                             <button type="button" class="btn btn-success">Finish Purchase</button>
                         </div>
                     </div>
