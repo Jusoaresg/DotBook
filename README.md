@@ -2,6 +2,9 @@
 
 O DotBook é uma loja online de livros desenvolvida em ASP.NET Core MVC.
 
+### Pré-Requisitos
+**.NET Core SDK 8:** Certifique-se de ter o SDK do .NET Core instalado para compilar e executar o projeto.
+
 ## Deploy
 
 O DotBook esta atualmente implantado e acessivel online. Você pode visitar a aplicação no link:
@@ -10,6 +13,10 @@ https://dotbook.onrender.com
 
 **OBS**: O site normalmente demora para carregar a primeira vez mesmo, por conta da inatividade de usuarios.
 
+## Tecnologias Utilizadas
+**ASP.NET Core MVC:** Framework web da Microsoft para criar uma aplicação robusta
+**Entity Framework Core:** Implementação de um sistema de banco de dados PostgreSQL para gerenciar produtos e categorias de forma eficiente.
+**Identity Roles:** Separação de áreas de Customer e Admin para garantir funcionalidades distintas para diferentes usuários.
 
 ## Visão Geral
 
@@ -22,6 +29,11 @@ Entity Framework Core: Implementando um sistema de banco de dados PostgreSQL par
 Identity Roles: Separando as áreas de Customer e Admin para garantir funcionalidades distintas para diferentes usuários.
 
 Makefile: Automatizando tarefas comuns do projeto para simplificar o fluxo de trabalho.
+
+## Estrutura do Projeto
+
+**Repository, Unity of Work Pattern:** Utilização de padrões de design para organizar a lógica de acesso a dados.
+**Async Methods:** Métodos assíncronos são utilizados, principalmente em operações que envolvem salvar no banco de dados e obtenção de dados.
 
 ## Configuração do Ambiente no Linux
 Para configurar o ambiente de desenvolvimento:
@@ -56,3 +68,5 @@ CRUD de Produtos: Possibilidade de criar, ler, atualizar e excluir produtos.
 CRUD de Categorias: O Admin pode gerenciar categorias, adicionando novas ou removendo existentes.
 
 Carrinho de compras: Funcionalidades de deletar, incrementar e decrementar quantidade.
+
+Metodos async: utilizados em metodos que podem comprometer a thread principal
