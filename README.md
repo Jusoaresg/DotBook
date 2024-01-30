@@ -14,7 +14,7 @@ https://dotbook.onrender.com
 **OBS**: O site normalmente demora para carregar a primeira vez mesmo, por conta da inatividade de usuarios.
 
 ## Tecnologias Utilizadas
-**ASP.NET Core MVC:** Framework web da Microsoft para criar uma aplicação robusta <br/>
+**ASP.NET Core MVC:** Framework web da Microsoft para criar uma aplicação robusta. <br/>
 **Entity Framework Core:** Implementação de um sistema de banco de dados PostgreSQL para gerenciar produtos e categorias de forma eficiente. <br/>
 **Identity Roles:** Separação de áreas de Customer e Admin para garantir funcionalidades distintas para diferentes usuários. <br/>
 
