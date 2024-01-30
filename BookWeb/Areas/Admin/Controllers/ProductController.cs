@@ -23,11 +23,12 @@ namespace BookWeb.Areas.Admin.Controllers
             _webHostEnviroment = webHostEnviroment;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
-
+            IEnumerable<Product> objProductList = await _unitOfWork.Product.GetAllAsync(includeProperties: "Category");
+            objProductList = objProductList.ToList();
             return View(objProductList);
+
         }
 
         public IActionResult Upsert(int? id)
@@ -36,7 +37,7 @@ namespace BookWeb.Areas.Admin.Controllers
 
             ProductVM productVM = new()
             {
-                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                CategoryList = _unitOfWork.Category.GetAllAsync().Result.Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString(),
@@ -96,13 +97,13 @@ namespace BookWeb.Areas.Admin.Controllers
                     _unitOfWork.Product.Update(productVM.Product);
                 }
 
-                _unitOfWork.Save();
+                _unitOfWork.SaveAsync();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
             else
             {
-                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                productVM.CategoryList = _unitOfWork.Category.GetAllAsync().Result.Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString(),
@@ -114,9 +115,10 @@ namespace BookWeb.Areas.Admin.Controllers
         #region APICALLS
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            IEnumerable<Product> objProductList = await _unitOfWork.Product.GetAllAsync(includeProperties: "Category");
+            objProductList = objProductList.ToList();
 
             return Json(new { data = objProductList });
         }
@@ -145,7 +147,7 @@ namespace BookWeb.Areas.Admin.Controllers
             }
 
             _unitOfWork.Product.Remove(productToBeDeleted);
-            _unitOfWork.Save();
+            _unitOfWork.SaveAsync();
 
             return Json(new { success = true, message = "Delete Successful" });
         }

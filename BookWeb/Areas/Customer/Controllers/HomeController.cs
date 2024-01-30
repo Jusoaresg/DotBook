@@ -19,11 +19,11 @@ namespace BookWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+                IEnumerable<Product> productList = await _unitOfWork.Product.GetAllAsync(includeProperties: "Category");
                 return View(productList);
             }
             catch(Exception ex)
@@ -39,27 +39,28 @@ namespace BookWeb.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(Product product, int amount)
+        public async Task<IActionResult> Details(Product product, int amount)
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!string.IsNullOrEmpty(userId))
             {
 
-                IEnumerable<ShoppingCartItem> userItems = _unitOfWork.ShoppingCartItem.GetAll(includeProperties: "Product").Where(u => u.UserId == userId);
+                IEnumerable<ShoppingCartItem> userItems = await _unitOfWork.ShoppingCartItem.GetAllAsync(includeProperties: "Product");
+                userItems = userItems.Where(u => u.UserId == userId);
                 foreach(var obj in userItems)
                 {
                     if(obj.ProductId == product.Id)
                     {
                         obj.Amount += amount;
                         _unitOfWork.ShoppingCartItem.Update(obj);
-                        _unitOfWork.Save();
+                        await _unitOfWork.SaveAsync();
                         return RedirectToAction("Index", "ShoppingCart");
                     }
                 }
 
                 ShoppingCartItem item = new ShoppingCartItem{UserId = userId, ProductId = product.Id, Amount = amount};
                 _unitOfWork.ShoppingCartItem.Add(item);
-                _unitOfWork.Save();
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index", "ShoppingCart");
             }
             return RedirectToAction("Login", "Account", new {area = "Identity"});

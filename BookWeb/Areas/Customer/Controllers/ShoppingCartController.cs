@@ -23,15 +23,17 @@ namespace BookWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            IEnumerable<ShoppingCartItem> shoppingCartItemList = _unitOfWork.ShoppingCartItem.GetAll(includeProperties: "Product").Where<ShoppingCartItem>(u=>u.UserId==userId);
+            IEnumerable<ShoppingCartItem> shoppingCartItemList = await _unitOfWork.ShoppingCartItem.GetAllAsync(includeProperties: "Product");
+            shoppingCartItemList = shoppingCartItemList.Where<ShoppingCartItem>(u => u.UserId==userId);
             return View(shoppingCartItemList);
         }
 
         [HttpDelete]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             var cartItem = _unitOfWork.ShoppingCartItem.Get(u=>u.Id==id);
 
@@ -41,12 +43,12 @@ namespace BookWeb.Areas.Customer.Controllers
             }
 
             _unitOfWork.ShoppingCartItem.Remove(cartItem);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return Json(new {success = true, message = "Delete Successfuly"});
         }
 
         [HttpPost]
-        public IActionResult ModifyAmount(int? id, int amount)
+        public async Task<IActionResult> ModifyAmount(int? id, int amount)
         {
            var cartItem = _unitOfWork.ShoppingCartItem.Get(u => u.Id == id);
             if(cartItem == null)
@@ -56,7 +58,7 @@ namespace BookWeb.Areas.Customer.Controllers
 
             cartItem.Amount = amount;
             _unitOfWork.ShoppingCartItem.Update(cartItem);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return Json(new {success = true, message = "Cart amount modified"});
         }
 

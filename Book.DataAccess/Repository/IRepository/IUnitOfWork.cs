@@ -12,6 +12,6 @@ namespace Book.DataAccess.Repository.IRepository
         IProductRepository Product { get; }
         IShoppingCartItem ShoppingCartItem { get; }
 
-        public void Save();
+        public Task SaveAsync();
     }
 }

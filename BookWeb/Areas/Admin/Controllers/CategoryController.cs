@@ -17,9 +17,10 @@ namespace BookWeb.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
+            IEnumerable<Category> objCategoryList = await _unitOfWork.Category.GetAllAsync();
+            objCategoryList.ToList();
             return View(objCategoryList);
         }
 
@@ -38,7 +39,7 @@ namespace BookWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(Category obj)
+        public async Task<IActionResult> Upsert(Category obj)
         {
             if(ModelState.IsValid)
             {
@@ -53,7 +54,7 @@ namespace BookWeb.Areas.Admin.Controllers
                     TempData["success"] = "Category edited successfully";
                 }
 
-                _unitOfWork.Save();
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View();
@@ -84,7 +85,7 @@ namespace BookWeb.Areas.Admin.Controllers
             }
 
             _unitOfWork.Category.Remove(obj);
-            _unitOfWork.Save();
+            _unitOfWork.SaveAsync();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
