@@ -58,7 +58,21 @@ namespace BookWeb.Areas.Customer.Controllers
                     }
                 }
 
-                ShoppingCartItem item = new ShoppingCartItem{UserId = userId, ProductId = product.Id, Amount = amount};
+                double price = 0;
+                if(amount > 100)
+                { 
+                    price = product.Price100; 
+                }
+                else if (amount > 50) 
+                {
+                    price = product.Price50;
+                }
+                else 
+                {
+                    price = product.Price;
+                }
+
+                ShoppingCartItem item = new ShoppingCartItem{UserId = userId, ProductId = product.Id, Amount = amount, Price = price};
                 _unitOfWork.ShoppingCartItem.Add(item);
                 await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index", "ShoppingCart");
