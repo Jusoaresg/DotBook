@@ -4,6 +4,7 @@ using Book.DataAccess.Data;
 using Book.DataAccess.Repository;
 using Book.DataAccess.Repository.IRepository;
 using Book.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Book.DataAccess;
 
@@ -17,7 +18,26 @@ public class ShoppingCartItemRepository : Repository<ShoppingCartItem>, IShoppin
     }
     public void Update(ShoppingCartItem obj)
     {
-        //var itemFromDb = _db.ShoppingCartItems.FirstOrDefault(u=>u.Id==obj.Id);
+
+        var updatedItem = _db.ShoppingCartItems.
+                                        Include(item => item.Product).
+                                        FirstOrDefault(item => item.Id == obj.Id);
+        if (updatedItem != null)
+        {
+            if (obj.Amount > 100)
+            {
+                obj.Price = obj.Product.Price100;
+            }
+            else if (obj.Amount > 50)
+            {
+                obj.Price = obj.Product.Price50;
+            }
+            else
+            {
+                obj.Price = obj.Product.Price;
+            }
+        }
+
         _db.ShoppingCartItems.Update(obj);
     }
 }
