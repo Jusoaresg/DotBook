@@ -1,7 +1,6 @@
 @model IEnumerable<ShoppingCartItem>
 
 @{
-    double price = 0;
     double totalPrice = 0;
 }
 
@@ -31,24 +30,10 @@
                                         <div class="d-flex justify-content-between align-items-center mb-0">
                                             
                                             <div hidden>
-                                                 @if(@cartItem.Amount >= 100)
-                                                 {
-                                                     @(price = @cartItem.Product.Price100);
-                                                 }
-                                                 else if (@cartItem.Amount > 50)
-                                                 {
-                                                     @(price = @cartItem.Product.Price50);
-                                                 }
-                                                 else 
-                                                 {
-                                                    @(price = @cartItem.Product.Price); 
-                                                 }
-
-                                                 @(totalPrice += (price * @cartItem.Amount));
+                                                 @(totalPrice += (cartItem.Price * @cartItem.Amount));
                                             </div>
-
-                                                <p class="card-text">Unit Price: @(price.ToString("C"))</p>
-                                                <p class="card-text">Subtotal: @((cartItem.Amount * price).ToString("C"))</p>
+                                                <p class="card-text">Unit Price: @(cartItem.Price.ToString("C"))</p>
+                                                <p class="card-text">Subtotal: @((cartItem.Amount * cartItem.Price).ToString("C"))</p>
                                                 <button type="button" class="btn btn-danger position-absolute top-0 end-0 me-2 mt-2 btn-sm rounded-3" onclick='Delete("@cartItem.Id")'> Remove from Cart</button>
                  
                                              </div>
@@ -75,7 +60,9 @@
                         <div class="card-body">
                             <h5 class="card-title">Cart Summary</h5>
                             <p class="card-text">Total: @(totalPrice.ToString("C"))</p>
-                            <button type="button" class="btn btn-success">Finish Purchase</button>
+                            <form method="post" asp-action="IndexPost">
+                                <button type="submit" class="btn btn-success">Finish Purchase</button>
+                            </form>
                         </div>
                     </div>
                 </div>
