@@ -24,18 +24,9 @@ public class ShoppingCartItemRepository : Repository<ShoppingCartItem>, IShoppin
                                         FirstOrDefault(item => item.Id == obj.Id);
         if (updatedItem != null)
         {
-            if (obj.Amount > 100)
-            {
-                obj.Price = obj.Product.Price100;
-            }
-            else if (obj.Amount > 50)
-            {
-                obj.Price = obj.Product.Price50;
-            }
-            else
-            {
-                obj.Price = obj.Product.Price;
-            }
+            double price = obj.Amount > 100 ? obj.Product.Price100 :
+                            obj.Amount > 50 ? obj.Product.Price50 :
+                            obj.Product.Price;
         }
 
         _db.ShoppingCartItems.Update(obj);
