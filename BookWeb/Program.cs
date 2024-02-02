@@ -12,28 +12,20 @@ using System.ComponentModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*
-// SQL Server Connection String
-var server = builder.Configuration["DbServer"] ?? "127.0.0.1";
-var port = builder.Configuration["DbPort"] ?? "1433";
-var user = builder.Configuration["DbUser"] ?? "SA";
-var password = builder.Configuration["Password"] ?? "yourStrong(!)Password";
-var database = builder.Configuration["Database"] ?? "bookBase";
-var connectionString = $"Server={server},{port};Database={database};User ID={user};Password={password};TrustServerCertificate=True";
-*/
-
 // PostgreSQL Connection String
-var host = builder.Configuration["DbHost"] ?? "127.0.0.1";
-var database = builder.Configuration["Database"] ?? "dotbookbase";
-var user = builder.Configuration["DbUser"] ?? "admin";
-var password = builder.Configuration["Password"] ?? "admin";
+var dbConfig = builder.Configuration.GetSection("Database");
+var host = dbConfig.GetValue<string>("Host");
+var database = dbConfig.GetValue<string>("Database");
+var user = dbConfig.GetValue<string>("User");
+var password = dbConfig.GetValue<string>("Password");
+
 var connectionString = $"Host={host}; Database={database}; Username={user}; Password={password}";
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    //options.UseSqlServer(connectionString));
     options.UseNpgsql(connectionString));
+    
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
