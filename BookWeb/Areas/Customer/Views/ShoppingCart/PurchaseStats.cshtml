@@ -1,0 +1,24 @@
+<head>
+    <title>Purchase Status</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Purchase Details</h2>
+
+        @if (ViewBag.success)
+        {
+            <div class="alert alert-success" role="alert">
+                Congratulations! Your purchase was successful.
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                Oops! Something went wrong with your purchase. Please try again.
+            </div>
+        }
+
+        <!-- Outras informações da compra podem ser exibidas aqui -->
+    </div>
+</body>
+</html>
