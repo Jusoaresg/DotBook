@@ -42,12 +42,19 @@ namespace BookWeb.Areas.Customer.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             IEnumerable<ShoppingCartItem> shoppingCartItemsList = await _unitOfWork.ShoppingCartItem.GetAllAsync(includeProperties: "Product");
             shoppingCartItemsList = shoppingCartItemsList.Where<ShoppingCartItem>(u => u.UserId==userId);
-            var returnUrl = "http://localhost:5171/";
+            var returnUrl = Url.Action(action: "PurchaseStats", controller: "ShoppingCart", values: null, protocol: "http");
             var StripeService = new StripeService(_config);
             var session = StripeService.CreateCheckoutSession(shoppingCartItemsList, returnUrl);
 
             return Redirect(session.Url);
         }
+
+        public IActionResult PurchaseStats(bool success)
+        {
+            ViewBag.Success = success;
+            return View();
+        }
+
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int? id)
