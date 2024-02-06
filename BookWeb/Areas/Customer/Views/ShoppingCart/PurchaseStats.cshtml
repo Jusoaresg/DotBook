@@ -1,24 +1,38 @@
 <head>
     <title>Purchase Status</title>
 </head>
+
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4">Purchase Details</h2>
 
         @if (ViewBag.success)
         {
-            <div class="alert alert-success" role="alert">
-                Congratulations! Your purchase was successful.
+            <div class="card shadow border-2 rounded-3 mt-4">
+                <div class="card-header bg-secondary bg-gradient m-lg-0 py-2 rounded-2">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 class="text-success py-4">Congratulations! Your purchase was successful. </h2>
+                        </div>
+                    </div>
+                </div>
             </div>
         }
         else
         {
-            <div class="alert alert-danger" role="alert">
-                Oops! Something went wrong with your purchase. Please try again.
+            <div class="card shadow border-2 rounded-3 mt-4">
+                <div class="card-header bg-secondary bg-gradient m-lg-0 py-2 rounded-2">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 class="text-danger py-4">Oops! Something went wrong with your purchase. Please try again.
+                            </h2>
+                        </div>
+                    </div>
+                </div>
             </div>
         }
 
         <!-- Outras informações da compra podem ser exibidas aqui -->
     </div>
 </body>
+
 </html>
