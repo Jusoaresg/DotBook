@@ -4,7 +4,7 @@ SOLUTION = DotBook.sln
 
 DB_CONTAINER_NAME = bulkyBase
 
-run: run-docker 
+run: run-container
 	dotnet run --project $(STARTUP_PROJECT)
 
 watch:
@@ -28,7 +28,7 @@ update-database:
 # DOCKER
 
 create-container:
-	sudo docker run -e "ACCEPT_EULA=Y" -e 'MSSQL_SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 --name $(DB_CONTAINER_NAME) -d mcr.microsoft.com/mssql/server:2022-latest
+	sudo docker run -e 'POSTGRES_USER=admin' -e 'POSTGRES_DB=dotbookbase' -e 'POSTGRES_PASSWORD=admin' -p 5432:5432 --name $(DB_CONTAINER_NAME) -d postgres
 
 run-container:
 	sudo docker start $(DB_CONTAINER_NAME)
