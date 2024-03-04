@@ -28,6 +28,8 @@ Entity Framework Core: Implementando um sistema de banco de dados PostgreSQL par
 
 Identity Roles: Separando as áreas de Customer e Admin para garantir funcionalidades distintas para diferentes usuários.
 
+Pagamentos: Integração da API de pagamentos da Stripe.
+
 Makefile: Automatizando tarefas comuns do projeto para simplificar o fluxo de trabalho.
 
 ## Estrutura do Projeto
@@ -68,3 +70,5 @@ CRUD de Produtos: Possibilidade de criar, ler, atualizar e excluir produtos.
 CRUD de Categorias: O Admin pode gerenciar categorias, adicionando novas ou removendo existentes.
 
 Carrinho de compras: Funcionalidades de deletar, incrementar e decrementar quantidade.
+
+Pagamentos: Integração da API de pagamentos da Stripe para a realização das compras.
